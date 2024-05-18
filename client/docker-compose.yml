@@ -1,0 +1,36 @@
+version: '3'
+services:
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #image: todolist-client
+   # volumes:
+    #  - ./client:/app
+    ports:
+      - 3000:80
+    #environment:
+     # - REACT_APP_SSO_REDIRECT_URI=http://192.168.1.10:3000
+     # - REACT_APP_SSO_URL=http://172.26.64.1:8080
+     # - REACT_APP_SSO_REALM=orderlist
+     # - REACT_APP_SSO_CLIENT_ID=orderlistclient
+    environment:
+      - REACT_APP_API_URL=http://192.168.1.10/ctl
+      - REACT_APP_SSO_REDIRECT_URI=http://192.168.1.10:3000
+      - REACT_APP_SSO_URL=http://192.168.1.10:8080/auth
+      - REACT_APP_SSO_REALM=Perntodo
+      - REACT_APP_SSO_CLIENT_ID=Todo_app
+      - REACT_APP_SSO_ENABLE_CORS=true
+      - REACT_APP_SSO_CHECK_LOGIN_INTERVAL=900
+      - REACT_APP_SILENT_SSO_CHECK_REDIRECT_URI=http://192.168.1.10:3000/silent-check-sso.html
+    restart: always
+    logging:
+      options:
+        max-size: 100m
+    networks:
+      - todo-app-network
+networks:
+  todo-app-network:
+        external: true
+

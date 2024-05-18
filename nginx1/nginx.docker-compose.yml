@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  thien_nginx:
+    container_name: thien_nginx
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 8080:8080
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    restart: always
+    mem_limit: 2g
+    logging:
+      options:
+        max-size: 100m
+    networks:
+      - todo-app-network
+networks:
+  todo-app-network:
+        external: true
